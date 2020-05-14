@@ -7,20 +7,17 @@ const app = express();
 
 const server = http.createServer(app)
 
-// This funciton will be executed for every incoming request
-// Must call next for the next app.use to be called
-
-app.use((req,res,next)=>{
-    console.log('in the middleware')
-    next()
-
+// All routes that start with /
+app.use('/products', (req,res,next)=>{
+    console.log('another middleware')
+    res.send('<h1>This is the Product page</h1>')
 })
 
-app.use((req,res,next)=>{
+
+// All routes that start with /
+app.use('/', (req,res,next)=>{
     console.log('another middleware')
     res.send('<h1>Hello from express</h1>')
-    
-
 })
 
 app.listen(3000);
