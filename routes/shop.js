@@ -12,9 +12,8 @@ router.get('/', (req,res,next)=>{
 
     console.log(adminData.products);
 
-    // this shares data between users, which mean the data is shared on the node.js server.
-    // rarely what we want to do
-    res.render('shop')
+    // render data in shop.pug
+    res.render('shop',{prods:adminData.products})
 
 });
 

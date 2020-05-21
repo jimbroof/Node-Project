@@ -12,10 +12,6 @@ const app = express();
 app.set('view engine','pug');
 app.set('views','views')
 
-app.get('/thestart', (req, res) => {
-    res.render('index', { title: 'Hey', message: 'Hello there!' })
-  })
-
 router = express.Router()
 
 const adminData = require('./routes/admin');
@@ -33,9 +29,7 @@ app.use('/admin',adminData.routes)
 app.use(shopRoutes)
 
 app.use((req,res,next)=>{
-
-    res.status(404).sendFile(path.join(rootDir,'views','/404.html'))
-
+    res.status(404).render('404');
    // res.send('<form action="/admin/add-product" method=POST><input type="text" name="title"><button type=submit>Add product</button></input></form>')
 });
 
