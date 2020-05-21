@@ -12,6 +12,8 @@ router.get('/', (req,res,next)=>{
 
     console.log(adminData.products);
 
+    // this shares data between users, which mean the data is shared on the node.js server.
+    // rarely what we want to do
     res.sendFile(path.join(rootDir,'views','shop.html'))
 
 });
