@@ -9,6 +9,13 @@ const rootDir = require('./util/path')
 // starting th
 const app = express();
 
+app.set('view engine','pug');
+app.set('views','views')
+
+app.get('/thestart', (req, res) => {
+    res.render('index', { title: 'Hey', message: 'Hello there!' })
+  })
+
 router = express.Router()
 
 const adminData = require('./routes/admin');
