@@ -11,7 +11,7 @@ const products =[]
 // All routes that start with /
 router.get('/add-product', (req,res,next)=>{
 
-    res.render('add-product',{title:'title'})
+    res.render('add-product',{title:'title',path:'/admin/add-product'})
 
 
     //res.sendFile(path.join(rootDir,'views','add-product.html'))
