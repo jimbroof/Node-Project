@@ -11,7 +11,7 @@ const errorController = require('./controllers/404')
 // starting th
 const app = express();
 
-app.set('view engine','pug');
+app.set('view engine','ejs');
 app.set('views','views')
 
 router = express.Router()
