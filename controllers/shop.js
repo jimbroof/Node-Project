@@ -37,6 +37,19 @@ exports.getIndex = (req,res,next)=>{
      });
  }
 
+ exports.getOrders = (req,res,next)=>{
+
+    Product.fetchAll(products =>{
+          // render data in shop.pug
+     res.render('shop/orders',{
+         prods:products,
+         pageTitle:'Your orders',
+         path: '/'
+     })
+     });
+ }
+
+
  exports.getCheckout = (req,res,next) =>{
     res.render('/shop/checkout',{
         prods:products,

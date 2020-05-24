@@ -32,9 +32,35 @@ exports.postProduct = (req,res,next)=>{
     // request does not automatically parse the request.
     // must therefore aedd another middleware
     // we have therefore installed npm install --save body-parser
-        const product = new Product(req.body.title)
+
+        const title = req.body.title
+        const imageUrl = req.body.imageUrl
+        const description = req.body.description
+        const price = req.body.price
+
+        const product = new Product(title,imageUrl,description,price)
+
         product.save()
 
     res.redirect('/');
 }
+
+exports.editProduct = (req,res,next)=>{
+    // request does not automatically parse the request.
+    // must therefore aedd another middleware
+    // we have therefore installed npm install --save body-parser
+
+        const title = req.body.title
+        const imageUrl = req.body.imageUrl
+        const description = req.body.description
+        const price = req.body.price
+
+        const product = new Product(title,imageUrl,description,price)
+
+        product.save()
+
+    res.redirect('/');
+}
+
+
 

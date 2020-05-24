@@ -6,10 +6,7 @@ const rootDir = require('../util/path')
 
 const router = express.Router()
 
-const productController = require('../controllers/shop');
-
 const adminController = require('../controllers/admin');
-
 
 // /admin/add-product => get
 router.get('/add-product',adminController.getAddProduct);
@@ -17,8 +14,11 @@ router.get('/add-product',adminController.getAddProduct);
 // /admin/add-product --> GET
 router.get('/products',adminController.getProduct);
 
+// /admin/add-product --> GET
+router.get('/products',adminController.getProduct);
+
 // Will only execute on post requests
-router.post('/add-product',adminController.postProduct)
+router.get('edit-product', adminController.editProduct)
 
 
 module.exports = router
