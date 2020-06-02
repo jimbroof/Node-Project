@@ -12,13 +12,18 @@ const adminController = require('../controllers/admin');
 router.get('/add-product',adminController.getAddProduct);
 
 // /admin/add-product --> GET
-router.get('/products',adminController.getProduct);
+router.get('/products',adminController.getProducts);
 
-// /admin/add-product --> GET
-router.get('/products',adminController.getProduct);
+router.post('/add-product',adminController.postAddProduct);
 
 // Will only execute on post requests
-router.get('edit-product', adminController.editProduct)
+router.get('/edit-product', adminController.editProduct)
+
+router.get('/edit-product/:productId',adminController.getEditProduct)
+
+router.post('/edit-product',adminController.postEditProduct);
+
+router.post('/delete-product/:productId',adminController.postDeleteProduct);
 
 
 module.exports = router

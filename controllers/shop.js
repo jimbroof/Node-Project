@@ -1,7 +1,9 @@
 const Product = require('../models/product')
+const Cart = require('../models/cart')
 
 
-exports.getProducts = (req,res,next)=>{
+
+exports.getProducts = (req,res,next) =>{
 
    Product.fetchAll(products =>{
          // render data in shop.pug
@@ -11,6 +13,20 @@ exports.getProducts = (req,res,next)=>{
         path: '/products'
     })
     });
+}
+
+exports.getProduct = (req,res,next) => {
+    const prodId = req.params.productId;
+
+    Product.findById(prodId, product =>{
+        res.render('shop/product-detail',
+        {
+            product:product,
+            pageTitle:'product details',
+            path:'shop/product-detail'
+        })
+    });
+    
 }
 
 exports.getIndex = (req,res,next)=>{
@@ -27,15 +43,49 @@ exports.getIndex = (req,res,next)=>{
 
  exports.getCart = (req,res,next)=>{
 
-    Product.fetchAll(products =>{
-          // render data in shop.pug
-     res.render('shop/cart',{
-         prods:products,
-         pageTitle:'Your Cart',
-         path: '/'
-     })
-     });
+    Cart.getCart(cart=>{
+        
+        Product.fetchAll(products=>{
+            const cartProducts = []
+            for(product of products){
+                const cartProductData = cart.products.find(prod=>prod.id === product.id)
+                if(cartProductData){
+                    cartProducts.push({productData: product, qty:cartProductData.qty});
+                }
+            }
+
+            res.render('shop/cart',{
+                path:'/cart',
+                pageTitle:'Your Cart',
+                products:cartProducts
+            });
+        })
+
+
+       
+    });
  }
+
+ exports.postCart = (req,res,next)=>{
+    const productId = req.body.productId;
+    
+   Product.findById(productId, (product) =>{
+        Cart.addProduct(productId,product.price);
+    })
+    res.redirect('/cart')
+
+ };
+
+ exports.deleteitemFromCart = (req,res,next) =>{
+
+    const prodId = req.boy.productId
+
+    Product.findById( prodId, product=> {
+        Cart.deleteProduct(prodId, product.price)
+        res.redirect('/cart')
+    })
+ }
+
 
  exports.getOrders = (req,res,next)=>{
 
@@ -48,7 +98,6 @@ exports.getIndex = (req,res,next)=>{
      })
      });
  }
-
 
  exports.getCheckout = (req,res,next) =>{
     res.render('/shop/checkout',{

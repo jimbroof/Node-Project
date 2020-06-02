@@ -6,8 +6,14 @@
         
         <body>
         <%- include('../includes/navigation') %>
-        <main>
-            <p>Nothing there</p>
+        <main class="centered">
+            <p><%= product.title %></p>
+            <hr>
+            <div>
+                <img src="<%= product.imageUrl%>" alt="<%= product.title%>">
+            </div>
+
+            <h2><%= product.description %></h2>
         </main>
-            
+        <%- include('../includes/end.ejs') %>
         </body>

@@ -8,6 +8,8 @@ const rootDir = require('./util/path')
 
 const errorController = require('./controllers/404')
 
+const db = require('./util/database');
+
 // starting th
 const app = express();
 
@@ -18,6 +20,15 @@ router = express.Router()
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+
+db.execute('SELECT * FROM products')
+    .then((result)=>{
+        console.log(result)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
 
 // registeres a middleware to enable bodyparsing
 app.use(bodyparser.urlencoded({ extended: true }));
