@@ -22,14 +22,6 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 
-db.execute('SELECT * FROM products')
-    .then((result)=>{
-        console.log(result)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
-
 // registeres a middleware to enable bodyparsing
 app.use(bodyparser.urlencoded({ extended: true }));
 

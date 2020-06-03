@@ -1,25 +1,8 @@
 
-const fs = require('fs');
-const path = require('path');
-
 const Cart = require('./cart')
 
+const db = require('../util/database')
 
-const p = path.join(
-    path.dirname(process.mainModule.filename),
-    'data',
-    'products.json'
-  );
-
-const getProductsFromFile = (cb) =>{
-  
-      fs.readFile(p, (err, fileContent) => {
-        if (err) {
-          return cb([]);
-        }
-        return cb(JSON.parse(fileContent));
-      });
-}
 
 module.exports = class Product{
 
@@ -32,81 +15,21 @@ module.exports = class Product{
     }
 
     save() {
-
-
-        getProductsFromFile(products =>{
-
-          // check if Id exist
-          // If it does replace the product at existingProduct index with 
-          // this product
-          if(this.id){
-            const existingProductIndex = products.findIndex(
-              prod=>prod.id===this.id
-              )
-            const updatedProducts = [...products]
-            updatedProducts[existingProductIndex] = this
-
-            fs.writeFile(p, JSON.stringify(updatedProducts), err => {
-              console.log(err);
-            });
-          
-          } else{
-
-          // create a new product
-           this.id = Math.random().toString();
-
-            products.push(this);
-
-            fs.writeFile(p, JSON.stringify(products), err => {
-              console.log(err);
-            });
-          }
-        });
+      // (? ? ? ?), [] is used by the mysql2 to add data and then remove them 
+      return db.execute('INSERT INTO products (title, price, imageUrl, description) VALUES(?, ?, ?, ?)',
+      [this.title,this.price,this.imageUrl,this.description])
       }
- static fetchAll(cb) {
-    getProductsFromFile(cb)
+ static fetchAll() {
+
+  // returns the promise
+  return db.execute('SELECT * from products');
   }
 
 static findById(id,cb){
-  getProductsFromFile(products =>{
-      const product =  products.find(p => p.id === id )
-      cb(product)
-  })
-
+    cb([])
 }
 
 static deleteById(id){
-
-    getProductsFromFile(products=>{
-
-
-      const existingProductIndex = products.findIndex(product =>
-        product.id === id
-      )
-
-
-      if(existingProductIndex > -1){
-
-        let next = existingProductIndex + 1
-
-        const prodToForward = products.filter( product => 
-            product.id = id
-          );
-
-         products.splice(existingProductIndex,next)
-
-         fs.writeFile(p,JSON.stringify(products), err =>{
-           if(!err){
-             Cart.deleteProduct(id,prodToForward.price)
-           }
-         })  
-      } else{
-        console.log("the id is not present")
-      }
-
-
-
-    })
 
 
 }

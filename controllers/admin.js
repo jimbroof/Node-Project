@@ -79,12 +79,14 @@ exports.postAddProduct = (req,res,next)=>{
 
         const product = new Product(null,title,imageUrl,description,price)
 
-        product.save()
+        product.save().then(  
+             res.redirect('/')
+        ).catch(err=>console.log("product did not get saved"))
 
-    res.redirect('/admin/products');
 }
 
 exports.editProduct = (req,res,next)=>{
+
     // request does not automatically parse the request.
     // must therefore aedd another middleware
     // we have therefore installed npm install --save body-parser
@@ -98,7 +100,7 @@ exports.editProduct = (req,res,next)=>{
 
         product.save()
 
-    res.redirect('/');
+    res.redirect('/admin/edit-product');
 }
 
 
